@@ -9,12 +9,12 @@ class DownloadThread(QThread):
         self.photo_list = []
 
     def run(self):
-        # GET all photos and save it with whole number names.   
+        
         for i in range(len(self.photo_list)):
-            if i == 10: # Limit of 10 images
+            if i == 10: 
                 break
 
-            # * what
+            
             res = urlopen(self.photo_list[i]['img_src'])
             # Emit signal when process is over
         self.signal.emit(res.getcode())

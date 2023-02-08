@@ -1,12 +1,11 @@
 from multiprocessing.pool import ThreadPool
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow,QApplication,QPushButton,QLabel,QDialog,QLineEdit,QComboBox
+from PyQt5.QtWidgets import QMainWindow,QApplication,QPushButton,QLabel,QDialog,QLineEdit,QComboBox,QCalendarWidget
 from PyQt5.QtGui import QImage,QPixmap
 from urllib.request import urlopen
 import json
 from urllib.request import urlretrieve
-import sys,os
-import requests
+import sys,os,requests,ezgmail 
 from PyQt5.QtCore import QThread,pyqtSignal
 
 class DownloadThread(QThread):
@@ -21,7 +20,7 @@ class DownloadThread(QThread):
                 break
             res=urlopen(self.pic[i]['img_src'])
             if res.getcode()==200:
-                with open(f'images/{i}.png',"wb") as file:
+                with urlopen(f'images/image{i}.png',"wb") as file:
                     file.write(res.read())
         self.signal.emit(res.getcode())
 
@@ -46,6 +45,9 @@ class Ui(QMainWindow):
         self.dl_thread.signal.connect(self.finished)  
         #main label where the images load
         self.label=self.findChild(QLabel,"label")
+
+        self.mail_button=self.findChild(QPushButton,"one")
+        self.mail_button.clicked.connect(self.mail_send)
         
         #provides initial cover image
         self.pixmap=QPixmap(f'cover.png')
@@ -55,9 +57,15 @@ class Ui(QMainWindow):
         self.rover_combo=self.findChild(QComboBox,"comboBox")
         self.rover_combo.addItems(['curiosity','spirit','opportunity'])
         
-        
+        self.calender=self.findChild(QCalendarWidget,"calendarWidget")
+        self.calender.selectionChanged.connect(self.selected_date)
+
         
         self.show() 
+    
+    def selected_date(self):
+        date=self.calender.selectedDate()
+        print(str(date.toPyDate()))
 
 
    
@@ -90,6 +98,7 @@ class Ui(QMainWindow):
         else:
             self.pixmap=QPixmap(f'cover.png')
             self.label.setPixmap(self.pixmap)
+
         
 
     #function to get the images
@@ -125,13 +134,22 @@ class Ui(QMainWindow):
     # Display first image
         self.pixmap = QPixmap(f"images/0.png")
         self.image.setPixmap(self.pixmap)
-        self.fetch_button.setEnabled(True)
-
+        
+    
+    def mail_send(self):
+        image_data=[]
+        for file in os.listdir("images2"):
+            image_data.append(f'images2/{file}')
+        print(image_data)
+        
+        
+        ezgmail.send('anikethvij464@gmail.com','sup','the word',attachments=image_data)
+        print("sending email now")
             
 
-#         self.dateEdit = QtWidgets.QDateEdit(parent=self)
+         
 #         self.dateEdit.move(250, 400)
-#         self.dateEdit.setGeometry(QRect(42, 150, 200, 21))
+         
 #         self.dateEdit.setDisplayFormat("yyyy-MM-dd")
 #         self.dateEdit.setDate(QtCore.QDate.currentDate())
         
