@@ -7,14 +7,28 @@ import json
 from urllib.request import urlretrieve
 import sys,os
 import requests
-from threading import *
+from PyQt5.QtCore import QThread,pyqtSignal
 
+class DownloadThread(QThread):
+    signal=pyqtSignal('PyQt_PyObject')
+    def __init__(self):
+        QThread.__init__(self)
+        self.pic=[]
+    
+    def run(self):
+        for i in range(len(self.pic)):
+            if i==10:
+                break
+            res=urlopen(self.pic[i]['img_src'])
+            if res.getcode()==200:
+                with open(f'images/{i}.png',"wb") as file:
+                    file.write(res.read())
+        self.signal.emit(res.getcode())
 
 
 
 class Ui(QMainWindow):
     def __init__(self):
-        self.threadpool=ThreadPool
         super(Ui, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi('form.ui', self) # Load the .ui file
         
@@ -27,7 +41,9 @@ class Ui(QMainWindow):
         
         #image fetcher
         self.button=self.findChild(QPushButton,"pushButton")
-        self.button.clicked.connect(self.fetcher)    
+        self.button.clicked.connect(self.fetcher)  
+        self.dl_thread=DownloadThread()
+        self.dl_thread.signal.connect(self.finished)  
         #main label where the images load
         self.label=self.findChild(QLabel,"label")
         
@@ -36,8 +52,8 @@ class Ui(QMainWindow):
         self.label.setPixmap(self.pixmap)
         
         #The input combobox for selecting the rover
-        self.foo=self.findChild(QComboBox,"comboBox")
-        self.foo.addItems(['curiosity','spirit','opportunity'])
+        self.rover_combo=self.findChild(QComboBox,"comboBox")
+        self.rover_combo.addItems(['curiosity','spirit','opportunity'])
         
         
         
@@ -78,9 +94,9 @@ class Ui(QMainWindow):
 
     #function to get the images
     def fetcher(self):
-        worker=Worker()
+        
 
-        rover=str(self.foo.currentText())    
+        rover=str(self.rover_combo.currentText())    
         key="QN8PUdf7XPHoSfQptbB7IbrE7nSRkhBqBJDIOLh0"
         date="2015-6-3"
         
@@ -94,14 +110,26 @@ class Ui(QMainWindow):
         i=1
         for x in image_urls:
             print(x)
-        r = requests.get(x)
-        with open(f"images/image{i}.png", "wb") as f:
-            f.write(r.content)
-            i=i+1
+        # for image in image_urls:
+        #     image_file=requests.get(image).content
+        #     with open(f'images/image{i}.png',"wb") as f:
+        #         f.write(image_file)
+        #         i+=1
+
+
+        self.dl_thread.pic = data_json['photos']
+        self.dl_thread.start()
+
+    def finished(self):
+    
+    # Display first image
+        self.pixmap = QPixmap(f"images/0.png")
+        self.image.setPixmap(self.pixmap)
+        self.fetch_button.setEnabled(True)
 
             
 
-# self.dateEdit = QtWidgets.QDateEdit(parent=self)
+#         self.dateEdit = QtWidgets.QDateEdit(parent=self)
 #         self.dateEdit.move(250, 400)
 #         self.dateEdit.setGeometry(QRect(42, 150, 200, 21))
 #         self.dateEdit.setDisplayFormat("yyyy-MM-dd")

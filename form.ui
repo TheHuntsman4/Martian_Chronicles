@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1085</width>
-    <height>900</height>
+    <height>751</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -464,8 +464,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>700</y>
+     <x>730</x>
+     <y>630</y>
      <width>103</width>
      <height>36</height>
     </rect>
@@ -480,8 +480,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>70</y>
+     <x>520</x>
+     <y>80</y>
      <width>491</width>
      <height>491</height>
     </rect>
@@ -938,8 +938,8 @@
   <widget class="QPushButton" name="next">
    <property name="geometry">
     <rect>
-     <x>940</x>
-     <y>850</y>
+     <x>880</x>
+     <y>630</y>
      <width>103</width>
      <height>36</height>
     </rect>
@@ -951,8 +951,8 @@
   <widget class="QPushButton" name="prev">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>850</y>
+     <x>570</x>
+     <y>630</y>
      <width>103</width>
      <height>36</height>
     </rect>
@@ -1426,8 +1426,8 @@
   <widget class="QDateEdit" name="dateEdit">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>490</y>
+     <x>130</x>
+     <y>250</y>
      <width>165</width>
      <height>42</height>
     </rect>
