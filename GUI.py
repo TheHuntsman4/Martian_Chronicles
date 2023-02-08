@@ -5,8 +5,31 @@ from PyQt5.QtGui import QImage,QPixmap
 from urllib.request import urlopen
 import json
 from urllib.request import urlretrieve
-import sys,os,requests,ezgmail 
+import sys,os,requests,ezgmail,shutil 
 from PyQt5.QtCore import QThread,pyqtSignal
+
+class mailbox(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi('mailbox.ui',self)
+        
+        self.To=self.findChild(QLineEdit,"To")
+        self.subject=self.findChild(QLineEdit,"Subject")
+        self.Body=self.findChild(QLineEdit,"Body")
+        self.send=self.findChild(QPushButton,"send")
+        self.send.clicked.connect(self.mail_send)#hook this up with mail_send
+    
+    def mail_send(self):
+        image_data=[]
+        for file in os.listdir("images"):
+            image_data.append(f'images/{file}')
+        print(image_data)        
+        ezgmail.send(self.To.text(),self.subject.text(),self.Body.text(),attachments=image_data)
+        print("sending email now")        
+
+        self.show()
+
+        
 
 class DownloadThread(QThread):
     signal=pyqtSignal('PyQt_PyObject')
@@ -15,13 +38,18 @@ class DownloadThread(QThread):
         self.pic=[]
     
     def run(self):
+        if os.path.exists("images"):
+            shutil.rmtree("images")
+            os.makedirs("images")
+        else:
+            os.makedirs("images")
         for i in range(len(self.pic)):
-            if i==10:
-                break
             res=urlopen(self.pic[i]['img_src'])
             if res.getcode()==200:
-                with urlopen(f'images/image{i}.png',"wb") as file:
+                with open(f'images/image{i}.png',"wb") as file:
                     file.write(res.read())
+            else:
+                print("no pics found for this ")
         self.signal.emit(res.getcode())
 
 
@@ -47,7 +75,7 @@ class Ui(QMainWindow):
         self.label=self.findChild(QLabel,"label")
 
         self.mail_button=self.findChild(QPushButton,"one")
-        self.mail_button.clicked.connect(self.mail_send)
+        self.mail_button.clicked.connect(self.mailbox_call)
         
         #provides initial cover image
         self.pixmap=QPixmap(f'cover.png')
@@ -56,16 +84,18 @@ class Ui(QMainWindow):
         #The input combobox for selecting the rover
         self.rover_combo=self.findChild(QComboBox,"comboBox")
         self.rover_combo.addItems(['curiosity','spirit','opportunity'])
-        
+        #the calender widget to get dates
         self.calender=self.findChild(QCalendarWidget,"calendarWidget")
         self.calender.selectionChanged.connect(self.selected_date)
-
+        self.inp_date=''
         
         self.show() 
-    
+
+
+   #fuction to get the date 
     def selected_date(self):
         date=self.calender.selectedDate()
-        print(str(date.toPyDate()))
+        self.inp_date=(str(date.toPyDate()))
 
 
    
@@ -73,10 +103,10 @@ class Ui(QMainWindow):
     def next_pic(self):
         
         file=[]
-        for filename in os.listdir("images2"):
+        for filename in os.listdir("images"):
             file.append(filename)
         print(f'{self.i} loaded')
-        self.pixmap=QPixmap(f'images2/image{self.i}.png')
+        self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
         if(self.i<=len(file)):
             self.i+=1
@@ -89,9 +119,9 @@ class Ui(QMainWindow):
         
         print(f'{self.i} loaded')
         file=[]
-        for filename in os.listdir("images2"):
+        for filename in os.listdir("images"):
             file.append(filename)
-        self.pixmap=QPixmap(f'images2/image{self.i}.png')
+        self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
         if(self.i>0):
             self.i-=1
@@ -107,7 +137,7 @@ class Ui(QMainWindow):
 
         rover=str(self.rover_combo.currentText())    
         key="QN8PUdf7XPHoSfQptbB7IbrE7nSRkhBqBJDIOLh0"
-        date="2015-6-3"
+        date=self.inp_date
         
 
         url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/{rover}/photos?earth_date={date}&api_key={key}"
@@ -119,11 +149,7 @@ class Ui(QMainWindow):
         i=1
         for x in image_urls:
             print(x)
-        # for image in image_urls:
-        #     image_file=requests.get(image).content
-        #     with open(f'images/image{i}.png',"wb") as f:
-        #         f.write(image_file)
-        #         i+=1
+
 
 
         self.dl_thread.pic = data_json['photos']
@@ -132,28 +158,17 @@ class Ui(QMainWindow):
     def finished(self):
     
     # Display first image
-        self.pixmap = QPixmap(f"images/0.png")
-        self.image.setPixmap(self.pixmap)
+        self.pixmap = QPixmap(f"images/image0.png")
+        self.label.setPixmap(self.pixmap)
         
-    
-    def mail_send(self):
-        image_data=[]
-        for file in os.listdir("images2"):
-            image_data.append(f'images2/{file}')
-        print(image_data)
-        
-        
-        ezgmail.send('anikethvij464@gmail.com','sup','the word',attachments=image_data)
-        print("sending email now")
-            
+    def mailbox_call(self):
+        self.mailbox = mailbox()
+        self.mailbox.show()
+           
+
 
          
-#         self.dateEdit.move(250, 400)
-         
-#         self.dateEdit.setDisplayFormat("yyyy-MM-dd")
-#         self.dateEdit.setDate(QtCore.QDate.currentDate())
-        
-        
+
 
 
 app = QApplication(sys.argv)
