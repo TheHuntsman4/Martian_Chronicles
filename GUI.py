@@ -66,7 +66,7 @@ class DownloadThread(QThread):
 class Ui(QMainWindow):
     def __init__(self):
         super(Ui, self).__init__() # Call the inherited classes __init__ method
-        uic.loadUi('form.ui', self) # Load the .ui file
+        uic.loadUi('UI/form.ui', self) # Load the .ui file
         
         self.file=[]
         for filename in os.listdir("images"):
@@ -203,7 +203,7 @@ class MailDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         
-        uic.loadUi('mail.ui', self)
+        uic.loadUi('UI/mail.ui', self)
 
         self.to_field = self.findChild(QTextEdit, "textEdit")
         self.subject_field = self.findChild(QTextEdit, "textEdit_2")
@@ -256,7 +256,7 @@ class error_box(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        uic.loadUi('email_error.ui', self)
+        uic.loadUi('UI/email_error.ui', self)
         self.message=self.findChild(QLabel,"label")
         self.ok_button = self.findChild(QPushButton, "pushButton")
         self.ok_button.clicked.connect(lambda:self.close())
@@ -266,7 +266,7 @@ class it_works(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        uic.loadUi('mail_sent.ui', self)
+        uic.loadUi('UI/mail_sent.ui', self)
         self.message=self.findChild(QLabel,"label")
         self.ok_button = self.findChild(QPushButton, "pushButton")
         self.ok_button.clicked.connect(lambda:self.close())
