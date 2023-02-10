@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>751</height>
+    <width>859</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,18 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>859</width>
+    <height>547</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>859</width>
+    <height>547</height>
+   </size>
   </property>
   <property name="palette">
    <palette>
@@ -31,9 +43,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -103,18 +115,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -177,9 +189,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>53</red>
-        <green>53</green>
-        <blue>53</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -249,18 +261,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>48</red>
-        <green>48</green>
-        <blue>48</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>53</red>
-        <green>53</green>
-        <blue>53</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -323,9 +335,9 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -395,18 +407,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
+        <red>28</red>
+        <green>28</green>
+        <blue>28</blue>
        </color>
       </brush>
      </colorrole>
@@ -461,14 +473,22 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(28, 28, 28);
+</string>
+  </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>730</x>
-     <y>630</y>
-     <width>103</width>
-     <height>36</height>
+     <x>90</x>
+     <y>350</y>
+     <width>161</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
    <property name="text">
     <string>Find</string>
@@ -480,11 +500,17 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>70</y>
-     <width>491</width>
-     <height>491</height>
+     <x>330</x>
+     <y>60</y>
+     <width>501</width>
+     <height>401</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>501</width>
+     <height>391</height>
+    </size>
    </property>
    <property name="palette">
     <palette>
@@ -501,9 +527,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -573,18 +599,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -647,9 +673,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>53</red>
-         <green>53</green>
-         <blue>53</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -719,18 +745,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>48</red>
-         <green>48</green>
-         <blue>48</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>53</red>
-         <green>53</green>
-         <blue>53</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -793,9 +819,9 @@
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -865,18 +891,18 @@
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>28</red>
+         <green>28</green>
+         <blue>28</blue>
         </color>
        </brush>
       </colorrole>
@@ -928,6 +954,9 @@
      </disabled>
     </palette>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(28,28,28);</string>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -938,11 +967,15 @@
   <widget class="QPushButton" name="next">
    <property name="geometry">
     <rect>
-     <x>880</x>
-     <y>630</y>
-     <width>103</width>
+     <x>650</x>
+     <y>480</y>
+     <width>81</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
    <property name="text">
     <string>next</string>
@@ -951,11 +984,15 @@
   <widget class="QPushButton" name="prev">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>630</y>
-     <width>103</width>
+     <x>430</x>
+     <y>480</y>
+     <width>81</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
    <property name="text">
     <string>prev</string>
@@ -964,36 +1001,76 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>170</y>
-     <width>125</width>
-     <height>36</height>
+     <x>90</x>
+     <y>300</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="one">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>170</y>
-     <width>103</width>
-     <height>36</height>
+     <x>90</x>
+     <y>410</y>
+     <width>161</width>
+     <height>51</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
+   </property>
    <property name="text">
-    <string>MAIL</string>
+    <string>Send Mail</string>
    </property>
   </widget>
   <widget class="QCalendarWidget" name="calendarWidget">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>240</y>
-     <width>304</width>
-     <height>200</height>
+     <x>30</x>
+     <y>80</y>
+     <width>301</width>
+     <height>201</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">alternate-background-color: rgb(28,28,28);
+background-color: rgb(28,28,28);
+color: rgb(222, 158, 72);</string>
+   </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>10</y>
+     <width>301</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+font-size:20px;
+
+</string>
+   </property>
+   <property name="text">
+    <string>Welcome to the Mars Rover App </string>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>next</zorder>
+  <zorder>comboBox</zorder>
+  <zorder>one</zorder>
+  <zorder>calendarWidget</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>prev</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

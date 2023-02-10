@@ -14,47 +14,59 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="Body">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>511</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="Subject">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>120</y>
+      <y>90</y>
       <width>511</width>
-      <height>301</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Subject</string>
+    </property>
+    <property name="cursorPosition">
+     <number>7</number>
     </property>
    </widget>
    <widget class="QLineEdit" name="To">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-20</x>
       <y>20</y>
       <width>511</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>To</string>
     </property>
    </widget>
    <widget class="QPushButton" name="send">
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>430</y>
+      <y>420</y>
       <width>103</width>
       <height>36</height>
      </rect>
     </property>
     <property name="text">
      <string>Send</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Body">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>150</y>
+      <width>511</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Body</string>
     </property>
    </widget>
   </widget>

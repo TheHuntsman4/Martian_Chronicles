@@ -1,37 +1,43 @@
 from multiprocessing.pool import ThreadPool
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow,QApplication,QPushButton,QLabel,QDialog,QLineEdit,QComboBox,QCalendarWidget
+from PyQt5.QtWidgets import QTextEdit,QMainWindow,QApplication,QPushButton,QLabel,QDialog,QLineEdit,QComboBox,QCalendarWidget,QProgressBar
 from PyQt5.QtGui import QImage,QPixmap
 from urllib.request import urlopen
 import json
 from urllib.request import urlretrieve
 import sys,os,requests,ezgmail,shutil 
 from PyQt5.QtCore import QThread,pyqtSignal
+from threading import *
 
-class mailbox(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('mailbox.ui',self)
-        
-        self.To=self.findChild(QLineEdit,"To")
-        self.subject=self.findChild(QLineEdit,"Subject")
-        self.Body=self.findChild(QLineEdit,"Body")
-        self.send=self.findChild(QPushButton,"send")
-        self.send.clicked.connect(self.mail_send)#hook this up with mail_send
-    
-    def mail_send(self):
+#Threading the mail
+class MailThread(QThread):
+
+    signal = pyqtSignal('PyQt_PyObject')
+
+    def __init(self):
+        self.receiver = ""
+        self.subject = ""
+        self.body = ""
+
+    def run(self):
+
         image_data=[]
         for file in os.listdir("images"):
             image_data.append(f'images/{file}')
-        print(image_data)        
-        ezgmail.send(self.To.text(),self.subject.text(),self.Body.text(),attachments=image_data)
-        print("sending email now")        
+        print(image_data)
+             
+        try:
+            ezgmail.send('{self.receiver}',self.subject,self.body,attachments=image_data)
+            code=0
+            print("mail sent successfully")
+        except:
+            code=1
 
-        self.show()
-
-        
-
+        self.signal.emit(code)
+      
+#Threading the Downloading stage
 class DownloadThread(QThread):
+
     signal=pyqtSignal('PyQt_PyObject')
     def __init__(self):
         QThread.__init__(self)
@@ -49,17 +55,18 @@ class DownloadThread(QThread):
                 with open(f'images/image{i}.png',"wb") as file:
                     file.write(res.read())
             else:
-                print("no pics found for this ")
-        self.signal.emit(res.getcode())
+                print("no pics found for this input")
+        
 
 
-
+#The actual Main window
 class Ui(QMainWindow):
     def __init__(self):
         super(Ui, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi('form.ui', self) # Load the .ui file
         
-        self.i=0
+        self.i=1
+        self.image_urls=[]
         # the next and previous buttons
         self.next=self.findChild(QPushButton,"next")
         self.next.clicked.connect(self.next_pic)
@@ -69,13 +76,14 @@ class Ui(QMainWindow):
         #image fetcher
         self.button=self.findChild(QPushButton,"pushButton")
         self.button.clicked.connect(self.fetcher)  
-        self.dl_thread=DownloadThread()
-        self.dl_thread.signal.connect(self.finished)  
+        self.download_thread=DownloadThread()
+        self.download_thread.signal.connect(self.finished)  
         #main label where the images load
-        self.label=self.findChild(QLabel,"label")
+        self.label=self.findChild(QLabel,"label")   
 
         self.mail_button=self.findChild(QPushButton,"one")
         self.mail_button.clicked.connect(self.mailbox_call)
+
         
         #provides initial cover image
         self.pixmap=QPixmap(f'cover.png')
@@ -108,9 +116,10 @@ class Ui(QMainWindow):
         print(f'{self.i} loaded')
         self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
-        if(self.i<=len(file)):
+        if(self.i<len(file)):
             self.i+=1
         else:
+            self.i=1
             self.pixmap=QPixmap(f'cover.png')
             self.label.setPixmap(self.pixmap)
             
@@ -126,6 +135,7 @@ class Ui(QMainWindow):
         if(self.i>0):
             self.i-=1
         else:
+            self.i=1
             self.pixmap=QPixmap(f'cover.png')
             self.label.setPixmap(self.pixmap)
 
@@ -146,30 +156,99 @@ class Ui(QMainWindow):
         image_urls=[]
         for x in data_json["photos"]:
             image_urls.append(x['img_src'])
+        self.image_urls=image_urls
         i=1
         for x in image_urls:
             print(x)
-
-
-
-        self.dl_thread.pic = data_json['photos']
-        self.dl_thread.start()
+        #starting the thread
+        self.download_thread.pic = data_json['photos']
+        self.download_thread.start()
 
     def finished(self):
     
     # Display first image
         self.pixmap = QPixmap(f"images/image0.png")
         self.label.setPixmap(self.pixmap)
-        
+    
+    
     def mailbox_call(self):
-        self.mailbox = mailbox()
-        self.mailbox.show()
-           
+        call=MailDialog(self)
+        call.exec()
+        self.setWindowTitle(f"Mail sent!")
 
 
-         
+class MailDialog(QDialog):
 
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        
+        uic.loadUi('mail.ui', self)
 
+        self.to_field = self.findChild(QTextEdit, "textEdit")
+        self.subject_field = self.findChild(QTextEdit, "textEdit_2")
+        self.body_field = self.findChild(QTextEdit, "textEdit_3")
+        self.send_mail = self.findChild(QPushButton, "pushButton")
+        self.cancel = self.findChild(QPushButton, "pushButton_2")
+
+        self.send_mail.clicked.connect(self.send)
+        self.cancel.clicked.connect(lambda:self.close())
+
+        self.mail_thread = MailThread()
+        self.mail_thread.signal.connect(self.sent)
+
+        self.setWindowTitle(f"Mail")
+
+    def send(self):
+        
+        self.send_mail.setEnabled(False)
+        self.cancel.setEnabled(False)
+        self.to_field.setEnabled(False)
+        self.subject_field.setEnabled(False)
+        self.body_field.setEnabled(False)
+        
+        self.setWindowTitle("Sending mail...")
+
+        receiver = self.to_field.toPlainText()
+        print(receiver)
+        subject = self.subject_field.toPlainText()
+        print(subject)
+        body = self.body_field.toPlainText()
+        print(body)
+        self.mail_thread.receiver = receiver
+        self.mail_thread.subject = subject
+        self.mail_thread.body = body
+        
+        self.mail_thread.start()
+
+    def sent(self, result):
+        if result:
+            fail=error_box()
+            fail.exec()
+        else:
+            sucess=it_works()
+            sucess.exec()
+        
+        self.close()
+
+class error_box(QDialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        uic.loadUi('email_error.ui', self)
+        self.message=self.findChild(QLabel,"label")
+        self.ok_button = self.findChild(QPushButton, "pushButton")
+        self.ok_button.clicked.connect(lambda:self.close())
+        
+class it_works(QDialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        uic.loadUi('mail_sent.ui', self)
+        self.message=self.findChild(QLabel,"label")
+        self.ok_button = self.findChild(QPushButton, "pushButton")
+        self.ok_button.clicked.connect(lambda:self.close())
 
 app = QApplication(sys.argv)
 window = Ui()
