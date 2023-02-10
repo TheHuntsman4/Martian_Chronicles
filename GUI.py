@@ -8,8 +8,11 @@ from urllib.request import urlretrieve
 import sys,os,requests,ezgmail,shutil 
 from PyQt5.QtCore import QThread,pyqtSignal
 from threading import *
+# import env__
+# from dotenv import load_dotenv
 
 #Threading the mail
+
 class MailThread(QThread):
 
     signal = pyqtSignal('PyQt_PyObject')
@@ -65,6 +68,12 @@ class Ui(QMainWindow):
         super(Ui, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi('form.ui', self) # Load the .ui file
         
+        self.file=[]
+        for filename in os.listdir("images"):
+            self.file.append(filename)
+
+
+
         self.i=1
         self.image_urls=[]
         # the next and previous buttons
@@ -96,6 +105,10 @@ class Ui(QMainWindow):
         self.calender=self.findChild(QCalendarWidget,"calendarWidget")
         self.calender.selectionChanged.connect(self.selected_date)
         self.inp_date=''
+
+        #jump button
+        self.jump=self.findChild(QLineEdit,"jumper")
+        self.jump.textChanged.connect(self.image_jump)
         
         self.show() 
 
@@ -110,9 +123,7 @@ class Ui(QMainWindow):
     #function def of how to load the next image   
     def next_pic(self):
         
-        file=[]
-        for filename in os.listdir("images"):
-            file.append(filename)
+        file=self.file
         print(f'{self.i} loaded')
         self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
@@ -122,14 +133,13 @@ class Ui(QMainWindow):
             self.i=1
             self.pixmap=QPixmap(f'cover.png')
             self.label.setPixmap(self.pixmap)
+        self.jump.setText(str(self.i))
             
     #function def to load previous image
     def prev_pic(self):
         
+        file=self.file
         print(f'{self.i} loaded')
-        file=[]
-        for filename in os.listdir("images"):
-            file.append(filename)
         self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
         if(self.i>0):
@@ -138,6 +148,17 @@ class Ui(QMainWindow):
             self.i=1
             self.pixmap=QPixmap(f'cover.png')
             self.label.setPixmap(self.pixmap)
+        self.jump.setText(str(self.i))
+
+        
+    def image_jump(self):
+        try:
+            self.i=int(self.jump.text())
+            self.pixmap=QPixmap(f'images/image{self.i}.png')
+            self.label.setPixmap(self.pixmap)
+        except:
+            pass
+        
 
         
 
