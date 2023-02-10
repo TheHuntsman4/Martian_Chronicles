@@ -6,21 +6,41 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>548</height>
+    <width>473</width>
+    <height>460</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>473</width>
+    <height>460</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>473</width>
+    <height>460</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(28, 28, 28);
+</string>
+  </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>460</y>
+     <x>190</x>
+     <y>390</y>
      <width>103</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
    <property name="text">
     <string>send</string>
@@ -29,11 +49,15 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>460</y>
+     <x>310</x>
+     <y>390</y>
      <width>103</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
    <property name="text">
     <string>cancel</string>
@@ -42,34 +66,100 @@
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>143</x>
-     <y>60</y>
-     <width>291</width>
-     <height>70</height>
+     <x>0</x>
+     <y>30</y>
+     <width>471</width>
+     <height>31</height>
     </rect>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>471</width>
+     <height>41</height>
+    </size>
+   </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit_2">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>170</y>
-     <width>491</width>
-     <height>70</height>
+     <x>0</x>
+     <y>100</y>
+     <width>471</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit_3">
    <property name="geometry">
     <rect>
-     <x>33</x>
-     <y>290</y>
+     <x>20</x>
+     <y>190</y>
      <width>421</width>
-     <height>70</height>
+     <height>191</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>0</y>
+     <width>66</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
+   </property>
+   <property name="text">
+    <string>To</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>66</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
+   </property>
+   <property name="text">
+    <string>Subject</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>66</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(222, 158, 72);
+background-color: rgb(28, 28, 28);</string>
+   </property>
+   <property name="text">
+    <string>Body</string>
    </property>
   </widget>
  </widget>

@@ -25,12 +25,16 @@ class MailThread(QThread):
     def run(self):
 
         image_data=[]
+        c=0
         for file in os.listdir("images"):
-            image_data.append(f'images/{file}')
+            while(c<=10):
+                image_data.append(f'images/{file}')
+                c+=1
         print(image_data)
+
              
         try:
-            ezgmail.send('{self.receiver}',self.subject,self.body,attachments=image_data)
+            ezgmail.send(f'{self.receiver}',self.subject,self.body,attachments=image_data)
             code=0
             print("mail sent successfully")
         except:
@@ -124,6 +128,7 @@ class Ui(QMainWindow):
     def next_pic(self):
         
         file=self.file
+        print(len(file))
         print(f'{self.i} loaded')
         self.pixmap=QPixmap(f'images/image{self.i}.png')
         self.label.setPixmap(self.pixmap)
@@ -190,6 +195,10 @@ class Ui(QMainWindow):
     # Display first image
         self.pixmap = QPixmap(f"images/image0.png")
         self.label.setPixmap(self.pixmap)
+        call=download_done(self)
+        call.exec()
+        
+        
     
     
     def mailbox_call(self):
@@ -210,7 +219,10 @@ class MailDialog(QDialog):
         self.body_field = self.findChild(QTextEdit, "textEdit_3")
         self.send_mail = self.findChild(QPushButton, "pushButton")
         self.cancel = self.findChild(QPushButton, "pushButton_2")
-
+        self.To_label=self.findChild(QLabel,"label")
+        self.subject_label=self.findChild(QLabel,"label2")
+        self.body_label=self.findChild(QLabel,"label3")
+        
         self.send_mail.clicked.connect(self.send)
         self.cancel.clicked.connect(lambda:self.close())
 
@@ -270,6 +282,17 @@ class it_works(QDialog):
         self.message=self.findChild(QLabel,"label")
         self.ok_button = self.findChild(QPushButton, "pushButton")
         self.ok_button.clicked.connect(lambda:self.close())
+
+class download_done(QDialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        uic.loadUi('UI/download.ui', self)
+        self.message=self.findChild(QLabel,"label")
+        self.ok_button=self.findChild(QPushButton, "pushButton")
+        self.ok_button.clicked.connect(lambda:self.close())
+
 
 app = QApplication(sys.argv)
 window = Ui()
