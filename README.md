@@ -18,3 +18,21 @@ Use the Send Mail button to access the mail box and use the simple layout to sen
 ### NAVIGATION
 After the images have been successfully loaded, the user may use the "next" and "previous" buttons to navigate the images. As and added feature , a Jump feature has also been added to aid the user to traverse easily. Just specify the number of the image to load it in the window.
 
+## USAGE
+Before running the app,please install the requirements.txt file using <br>
+<center><b>pip install requirements.txt<b><center>
+To use the app, there are two options availabe :
+<ul>
+<li>Use the app directly as an excecutable</li>
+<li>Run the code from an editor</li>
+</ul>
+
+## Running the excecutable
+To run the app, just double click the app called "GUI"<br>
+
+## Using the code to run the app
+To run the code in an editor,follow the steps:
+<ol>
+<li>Navigate to the "SourceCode" directory</li>
+<li>Copy-Paste the file "GUI.py" to the main folder "martian_chronicles"</li>
+<li>Open your desired editor and run the file</li>
