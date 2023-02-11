@@ -56,14 +56,14 @@ class DownloadThread(QThread):
             os.makedirs("images")
         else:
             os.makedirs("images")
-        for i in range(len(self.pic)):
-            res=urlopen(self.pic[i]['img_src'])
-            if res.getcode()==200:
-                with open(f'images/image{i}.png',"wb") as file:
-                    file.write(res.read())
-            else:
-                print("no pics found for this input")
-        
+        try:
+            for i in range(len(self.pic)):
+                res=urlopen(self.pic[i]['img_src'])
+                if res.getcode()==200:
+                    with open(f'images/image{i}.png',"wb") as file:
+                        file.write(res.read())
+        except:
+            pass
 
 
 #The actual Main window
@@ -175,20 +175,25 @@ class Ui(QMainWindow):
         key="QN8PUdf7XPHoSfQptbB7IbrE7nSRkhBqBJDIOLh0"
         date=self.inp_date
         
-
-        url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/{rover}/photos?earth_date={date}&api_key={key}"
-        response = urlopen(url) 
-        data_json = json.loads(response.read())
-        image_urls=[]
-        for x in data_json["photos"]:
-            image_urls.append(x['img_src'])
-        self.image_urls=image_urls
-        i=1
-        for x in image_urls:
-            print(x)
-        #starting the thread
-        self.download_thread.pic = data_json['photos']
-        self.download_thread.start()
+        try:
+            url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/{rover}/photos?earth_date={date}&api_key={key}"
+            response = urlopen(url) 
+            data_json = json.loads(response.read())
+            image_urls=[]
+            for x in data_json["photos"]:
+                image_urls.append(x['img_src'])
+            self.image_urls=image_urls
+            i=1
+            for x in image_urls:
+                print(x)
+            #starting the thread
+            self.download_thread.pic = data_json['photos']
+            self.download_thread.start()
+        except:
+            call=errorDialog(self)
+            call.exec()
+            pass
+            
 
     def finished(self):
     
@@ -292,6 +297,13 @@ class download_done(QDialog):
         self.message=self.findChild(QLabel,"label")
         self.ok_button=self.findChild(QPushButton, "pushButton")
         self.ok_button.clicked.connect(lambda:self.close())
+class errorDialog(QDialog):
+    def __init__(self,parent=None):
+        super().__init__(parent)
+        uic.loadUi("UI/fetcherror.ui",self)
+        self.message=self.findChild(QLabel,"label")
+        self.closebutton=self.findChild(QPushButton, "pushButton")
+        self.closebutton.clicked.connect(lambda:self.close())
 
 
 app = QApplication(sys.argv)
